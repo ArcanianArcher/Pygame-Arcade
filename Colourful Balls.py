@@ -115,7 +115,7 @@ def game(arcade):
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_ESCAPE]:#Quits game
-                pygame.quit()
+                arcade.returnToArcade()
             if pressed[pygame.K_DOWN]:  #Player moves down
                 y += 4
             if pressed[pygame.K_UP]:    #Player moves up
