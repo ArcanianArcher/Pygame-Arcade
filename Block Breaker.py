@@ -52,11 +52,46 @@ def intersects(rect, r, center):
     corner_distance_sq = corner_x**2.0 +corner_y**2.0
     return corner_distance_sq <= r**2.0
 
-def end(state):
+def end(arcade, screen, score, state):
+    font1 = pygame.font.SysFont('Arial',24, True)
+    font2 = pygame.font.SysFont('Arial',48, True)
     if state == True: #win
-        pass
+        background = pygame.Surface((600,600))
+        background.fill(black)
+        screen.blit(background, (0,0))
+        q_text = font1.render('Press \'escape\' to quit', False, white)
+        r_text = font1.render('Press \'space\' or \'r\' to restart', False, white)
+        win_text = font2.render('You Win!', False, purple)
+        screen.blit(q_text, (600 // 2 - q_text.get_rect()[2] // 2, 600 // 1.4 - q_text.get_rect()[3] // 2))
+        screen.blit(r_text, (600 // 2 - r_text.get_rect()[2] // 2, 600 // 1.5 - r_text.get_rect()[3] // 2))
+        screen.blit(win_text, (600 // 2 - win_text.get_rect()[2] // 2, 600 // 2.5 - win_text.get_rect()[3] // 2)) 
+        pygame.display.flip()
+        while True:
+            arcade.getEvents()
+            pressed = arcade.getKey()
+            if pressed[K_SPACE] or pressed[K_r]:
+                Game(arcade)
+            if pressed[K_ESCAPE]:
+                arcade.returnToArcade()
     elif state == False: #lose
-        pass
+        background = pygame.Surface((600,600))
+        background.fill(black)
+        screen.blit(background, (0,0))
+        q_text = font1.render('Press \'escape\' to quit', False, white)
+        r_text = font1.render('Press \'space\' or \'r\' to restart', False, white)
+        score_str = 'Your score is: ' + str(score)
+        score_text = font1.render(score_str, False, purple)
+        screen.blit(q_text, (600 // 2 - q_text.get_rect()[2] // 2, 600 // 1.4 - q_text.get_rect()[3] // 2))
+        screen.blit(r_text, (600 // 2 - r_text.get_rect()[2] // 2, 600 // 1.5 - r_text.get_rect()[3] // 2))
+        screen.blit(score_text, (600 // 2 - score_text.get_rect()[2] // 2, 600 // 2.5 - score_text.get_rect()[3] // 2)) 
+        pygame.display.flip()
+        while True:
+            arcade.getEvents()
+            pressed = arcade.getKey()
+            if pressed[K_SPACE] or pressed[K_r]:
+                Game(arcade)
+            if pressed[K_ESCAPE]:
+                arcade.returnToArcade()
 
 def Game(arcade):
     arcade.setWindow(600,600)
@@ -79,7 +114,7 @@ def Game(arcade):
             brick.rect.x, brick.rect.y = 40*j,25*(i+2)
             bricks.add(brick)
     background = pygame.Surface((600,600))
-    background.fill(black,(0,0,600,600))
+    background.fill(black)
     screen.blit(background, (0,0))
     score = 0
     pygame.display.flip()
@@ -104,7 +139,7 @@ def Game(arcade):
                 ball.dx = -4   
         if ball.rect.x <= 0 or ball.rect.x >= 600 - ball.radius*2: ball.bounce_x()
         if ball.rect.y <= 0: ball.bounce_y()
-        if ball.rect.y >= 590 - ball.radius*2: end(False)
+        if ball.rect.y >= 590 - ball.radius*2: end(arcade, screen, score, False)
         ball.rect.x -= ball.dx
         ball.rect.y -= ball.dy
         kill_list = []
@@ -114,7 +149,7 @@ def Game(arcade):
                 ball.bounce_y()
                 blip.play()
                 score += 1
-        if len(bricks) == 0: end(True)
+        if len(bricks) == 0: end(arcade, screen, score, True)
         score_text = font1.render(str(score), False, maroon)
         bricks.clear(screen, background)
         bricks.remove(kill_list)
