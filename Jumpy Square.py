@@ -9,7 +9,6 @@ global screen_height
 screen_height = 600
 
 class Jumper(pygame.sprite.Sprite):
-
     def __init__(self, jump_velocity, g, file = None):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((20,20))
@@ -88,6 +87,8 @@ def Game(arcade):
     start = False
     score = 0
 
+    jump_sound = arcade.getSound(__file__, 'jump.wav')
+
     while True:
         if not start:
             start_text = font1.render('Press Space To Start', False, purple)
@@ -105,15 +106,18 @@ def Game(arcade):
                         if event.key == K_SPACE:
                             start = True
                             player.jump()
+                            jump_sound.play()
                 
                 pygame.display.flip()
                 clock.tick(60)
         if hit:
             score_str = 'Your score is: ' + str(score)
             score_text = font1.render(score_str, False, purple)
+            instructions = font1.render('Press any key to try again', False, purple)
             background = pygame.Surface((screen_width, screen_height))
             background.fill(black)
             screen.blit(background, (0,0))
+            screen.blit(instructions, (screen_width // 2 - instructions.get_rect()[2] // 2, screen_height // 1.2 - instructions.get_rect()[3] // 2))
             screen.blit(score_text, (screen_width // 2 - score_text.get_rect()[2] // 2, screen_height // 2 - score_text.get_rect()[3] // 2))
             while True:
                 for event in pygame.event.get():
@@ -137,8 +141,10 @@ def Game(arcade):
                 if event.key == K_ESCAPE:
                     arcade.returnToArcade()
                 player.jump()
+                jump_sound.play()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 player.jump()
+                jump_sound.play()
 
         pTimer +=1
         if pTimer >= BlockPair.INTERVAL:
@@ -167,6 +173,6 @@ def Game(arcade):
 
 
 if __name__ == '__main__':
-    pygame.init()
     pygame.mixer.init(22050,-16,2,16)
+    pygame.init()
     Game(arcade())
