@@ -119,6 +119,9 @@ def Game(arcade):
             screen.blit(background, (0,0))
             screen.blit(instructions, (screen_width // 2 - instructions.get_rect()[2] // 2, screen_height // 1.2 - instructions.get_rect()[3] // 2))
             screen.blit(score_text, (screen_width // 2 - score_text.get_rect()[2] // 2, screen_height // 2 - score_text.get_rect()[3] // 2))
+            pygame.display.flip()
+            pygame.time.wait(1000)
+            pygame.event.clear(KEYDOWN)
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
