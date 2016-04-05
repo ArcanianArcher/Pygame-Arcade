@@ -26,7 +26,7 @@ class arcade:
         arcade.initBackground(bg)
         UI_font1 = pygame.font.Font(os.getcwd() + '\\resources\\UI_font1.ttf', 48)
         UI_font2 = pygame.font.Font(os.getcwd() + '\\resources\\UI_font1.ttf', 16)
-        text1 = UI_font1.render('Welcome to the Pygame Aracade!', False, white)
+        text1 = UI_font1.render('Welcome to the Pygame Arcade!', False, white)
         selections = [
             UI_font2.render('1: Air Hockey', False, white),
             UI_font2.render('2: Block Breaker', False, white),
