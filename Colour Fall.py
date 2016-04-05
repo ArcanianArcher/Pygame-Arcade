@@ -65,6 +65,7 @@ def game(arcade):
     rectangle = pygame.Surface((100, 10)) 
     arcade.setWindow(900, 600)
     screen= arcade.get_screen()
+    Clock = pygame.time.Clock()
     while True:
         
         screen.fill((0,0,0))
@@ -172,6 +173,8 @@ def game(arcade):
         if pressed[K_ESCAPE]:
             arcade.returnToArcade()
         arcade.getEvents()
+        Clock.tick(180)
+        
 
 if __name__ == '__main__':
     pygame.init()
