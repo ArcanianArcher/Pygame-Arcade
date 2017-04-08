@@ -7,4 +7,4 @@ ICS4U-02 group project
 A collection of games built using pygame by the ICS4U-02 class, all running in a virtual arcade.
 
 
-Test commit 2 using "git control" package
+Test commit 3 using "git control" package
